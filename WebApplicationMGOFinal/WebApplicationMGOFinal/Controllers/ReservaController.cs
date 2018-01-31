@@ -14,5 +14,32 @@ namespace WebApplicationMGOFinal.Controllers
             ReservasModelContainer db = new ReservasModelContainer();
             return View(db.ReservaSet);
         }
+
+        public ActionResult Create()
+        {
+            return View();
+
+        }
+
+        [HttpPost]
+        public ActionResult Create(Reserva std)
+        {
+
+            if (ModelState.IsValid)
+            {
+                using (ReservasModelContainer DBContext = new ReservasModelContainer())
+                {
+                    DBContext.ReservaSet.Add(std);
+                    DBContext.SaveChanges();
+                }
+
+
+            }
+            return RedirectToAction("Index");
+
+        }
+
+
+
     }
 }

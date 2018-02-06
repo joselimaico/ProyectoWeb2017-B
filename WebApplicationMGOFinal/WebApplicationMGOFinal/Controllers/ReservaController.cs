@@ -15,11 +15,37 @@ namespace WebApplicationMGOFinal.Controllers
             return View(db.ReservaSet);
         }
 
-        public ActionResult Create()
+        public ActionResult Create(String fecha)
         {
+			var std = fecha;
+			string [] date_format;
+			date_format = fecha.Split((string[])null, StringSplitOptions.RemoveEmptyEntries);
+			int date = Int32.Parse(date_format[2]);
+			int year = Int32.Parse(date_format[3]);
+			int month = 0;
+			string current_month = date_format[1];
+			switch (current_month)
+			{
+				case "Jan":
+					month = 1;
+					break;
+				case "Feb":
+					month = 2;
+					break;
+
+			}
+
+			//std = "date:" + date+"month"+month + "year" + year;
+
+			DateTime test = new DateTime(year,month,date);
+
+			ViewData.Add(new KeyValuePair<string, object>("fecha",test));
+
             return View();
 
         }
+
+		
 
         [HttpPost]
         public ActionResult Create(Reserva std)
@@ -84,6 +110,19 @@ namespace WebApplicationMGOFinal.Controllers
 
 		}
 
+		public ActionResult Calendario()
+		{
+			return View();
+		}
 
+
+		public JsonResult GetEvents()
+		{
+			using (ReservasModelContainer db = new ReservasModelContainer())
+			{
+				var events = db.ReservaSet.ToList();
+				return new JsonResult { Data = events, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+			}
+		}
 	}
 }

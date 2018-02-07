@@ -1,14 +1,11 @@
-﻿@model WebApplicationMGOFinal.Reserva
+﻿
 @{
-	ViewBag.Title = "Calendario";
+	ViewBag.Title = "Agenda";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Calendario</h2>
+<h2>Agenda</h2>
 
-<!--
-	div id=calender es la grafico del calendario
--->
 <div id="calender"></div>
 
 <!--llamo a las librerias (sin internet no sirve)-->
@@ -48,36 +45,39 @@
 			})
 
 			function GenerateCalender(events) {
+				var date = @Html.Raw(Json.Encode(ViewData["fecha"]));
 				$('#calender').fullCalendar('destroy');
+
 				$('#calender').fullCalendar({
+
 					monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
 					monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
 					dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
 					dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
 					contentHeight: 400,
-					defaultDate: new Date(),
+					allDaySlot: false,
+
+					defaultView: 'agendaDay',
+					defaultDate: new Date(date),
 					timeFormat: 'h(:mm)a',
 					header: {
-						left: 'prev,next today',
+						left: 'prev,next',
 						center: 'title',
-						right: 'month,basicWeek'
+						right: ''
 					},
 					eventLimit: true,
 					eventColor: '#BD94E5',
 					events: events,
 					dayClick: function (date, jsEvent, view) {
-						
-					window.location.href = '/Reserva/Agenda?fecha='+date.toString();
 
-					    
-						
-					}
 
-					
-					
+						window.location.href = '/Reserva/Create?fecha=' + date.toString();
+					},
+					selectable: true,
+					selectHelper: true,
 					
 				});
-				
+
 
 			}
 

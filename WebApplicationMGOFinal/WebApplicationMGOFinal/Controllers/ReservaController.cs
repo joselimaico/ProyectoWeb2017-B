@@ -17,11 +17,11 @@ namespace WebApplicationMGOFinal.Controllers
 
         public ActionResult Create(String fecha)
         {
-			var std = fecha;
+			
 			
 			string [] date_format;
 			date_format = fecha.Split((string[])null, StringSplitOptions.RemoveEmptyEntries);
-			string date = date_format[2];
+			string day = date_format[2];
 			string year = date_format[3];
 			string month = "";
 			
@@ -42,10 +42,10 @@ namespace WebApplicationMGOFinal.Controllers
 				case "May":
 					month = "05";
 					break;
-				case "June":
+				case "Jun":
 					month = "06";
 					break;
-				case "July":
+				case "Jul":
 					month = "07";
 					break;
 				case "Aug":
@@ -70,23 +70,37 @@ namespace WebApplicationMGOFinal.Controllers
 			int horas = Int32.Parse(hour_format[0]);
 			string minutos = hour_format[1];
 			string segundos = hour_format[2];
-			//DateTime fechaFin;
-			//DateTime test = new DateTime(year,month,date);
+			
 			string fecha_inicio="";
 			string fecha_final = "";
-			fecha_inicio = date + "/" + month + "/" + year + " " + horas + ":" + minutos + ":" + segundos;
+			
+		    fecha_inicio = day + "/" + month + "/" + year + " " + horas + ":" + minutos + ":" + segundos;
+
 			ViewData.Add(new KeyValuePair<string, object>("fechaInicio", fecha_inicio));
+			
+			
 
 			if (minutos.Equals( "00"))
 			{
-				fecha_final = date + "/" + month + "/" + year + " " + horas + ":" + "30" + ":" + segundos; ;
-				ViewData.Add(new KeyValuePair<string, object>("fechaFin", fecha_final));
+				
+				
+					fecha_final = day + "/" + month + "/" + year + " " + horas + ":" + "30" + ":" + segundos;
+					ViewData.Add(new KeyValuePair<string, object>("fechaFin", fecha_final));
+				
+				
 			}
 
 			else if (minutos.Equals("30"))
 			{
-				fecha_final= date + "/" + month + "/" + year + " " + (horas+1) + ":" +"00"+ ":" + segundos;
-				ViewData.Add(new KeyValuePair<string, object>("fechaFin", fecha_final));
+				
+				
+				
+					fecha_final = day + "/" + month + "/" + year + " " + (horas + 1) + ":" + "00" + ":" + segundos;
+
+					ViewData.Add(new KeyValuePair<string, object>("fechaFin", fecha_final));
+				
+
+				
 			}
 			
 			
@@ -110,6 +124,8 @@ namespace WebApplicationMGOFinal.Controllers
             {
                 using (ReservasModelContainer DBContext = new ReservasModelContainer())
                 {
+					
+					
 					std.EstadoReserva = "Reservado";
 					std.Color = "red";
 					std.IsFullDay = 0;
@@ -199,10 +215,10 @@ namespace WebApplicationMGOFinal.Controllers
 				case "May":
 					month = "05";
 					break;
-				case "June":
+				case "Jun":
 					month = "06";
 					break;
-				case "July":
+				case "Jul":
 					month = "07";
 					break;
 				case "Aug":

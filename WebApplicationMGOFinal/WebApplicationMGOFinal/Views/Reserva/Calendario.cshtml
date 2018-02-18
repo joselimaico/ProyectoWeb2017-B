@@ -67,6 +67,12 @@
 					eventLimit: true,
 					eventColor: '#BD94E5',
 					events: events,
+					eventClick: function (event) {
+						if (event.title) {
+							alert('hola');
+						}
+
+					},
 					dayClick: function (date, jsEvent, view) {
 						
 					window.location.href = '/Reserva/Agenda?fecha='+date.toString();
